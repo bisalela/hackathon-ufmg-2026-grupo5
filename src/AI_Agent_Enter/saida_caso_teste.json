@@ -1,0 +1,58 @@
+{
+  "dados_caso": {
+    "identificacao": {
+      "numero_processo": "0654321-09.2024.8.04.0001",
+      "uf": "AM",
+      "comarca": "Manaus",
+      "valor_causa": 25000.0
+    },
+    "fatores_relevantes": {
+      "autor_idoso": "sim",
+      "autor_aposentado": "sim",
+      "pedido_tutela_urgencia": "sim",
+      "pedido_dano_moral": "sim",
+      "valor_dano_moral": 18000.0,
+      "pedido_repeticao_indebito": "sim",
+      "alegacao_vulnerabilidade": "sim",
+      "alegacao_uso_indevido_dados": "sim"
+    },
+    "resumo_caso": "Autor aposentado e idoso alega contratação fraudulenta de empréstimo consignado via canal digital pelo Banco UFMG, sem sua anuência, com descontos indevidos em seu benefício previdenciário, requerendo declaração de inexistência do débito, restituição em dobro e indenização por danos morais.",
+    "alegacoes_autor": [
+      "Jamais contratou, solicitou ou autorizou empréstimo consignado com o Banco UFMG.",
+      "Não possui conta na Caixa Econômica Federal, onde foi depositado o crédito do empréstimo.",
+      "Nunca utilizou aplicativo ou canal digital do banco para contratação.",
+      "Houve uso indevido de seus dados pessoais para contratação fraudulenta.",
+      "Descontos indevidos comprometem sua subsistência, pois depende exclusivamente do benefício previdenciário.",
+      "Requereu registro de ocorrência policial e reclamação administrativa junto ao banco e Banco Central."
+    ],
+    "documentos_banco": [
+      "Comprovante de crédito emitido pelo Banco UFMG confirmando operação de empréstimo consignado via aplicativo mobile.",
+      "Demonstrativo de evolução da dívida com parcelas pagas e saldo devedor atualizado.",
+      "Laudo referenciado interno do banco com evidências digitais da contratação (device fingerprint, IP, autenticação biométrica e senha eletrônica)."
+    ],
+    "pontos_favoraveis_banco": [
+      "Apresenta comprovante de crédito e contrato formalizado com dados do autor.",
+      "Evidências digitais indicam contratação via aplicativo mobile com autenticação biométrica e senha.",
+      "Registro da operação e liberação do crédito em conta vinculada ao tomador."
+    ],
+    "pontos_desfavoraveis_banco": [
+      "Ausência do vídeo de liveness (biometria facial) tradicionalmente capturado no final do fluxo de contratação.",
+      "Conta para liberação do crédito não pertence ao autor, que nega possuir conta na Caixa Econômica Federal.",
+      "Autor alega não ter utilizado o aplicativo nem ter autorizado a contratação.",
+      "Descontos realizados em benefício previdenciário, o que agrava a situação pela vulnerabilidade do autor."
+    ],
+    "observacoes_importantes": "O caso envolve alegação de fraude com uso indevido de dados pessoais do autor idoso e aposentado, com forte indício de contratação por terceiro. A ausência do vídeo de liveness no sistema do banco pode comprometer a prova da efetiva manifestação de vontade do autor. A tutela de urgência é requerida para cessar descontos que comprometem verba alimentar."
+  },
+  "campos_latex": {
+    "numero_processo": "0654321-09.2024.8.04.0001",
+    "uf": "AM",
+    "comarca": "Manaus",
+    "valor_causa": 25000.0,
+    "bloco_resumo_fatos": "\\section*{Resumo dos fatos}\nAutor aposentado e idoso alega contratação fraudulenta de empréstimo consignado via canal digital pelo Banco UFMG, sem sua anuência, com descontos indevidos em seu benefício previdenciário, requerendo declaração de inexistência do débito, restituição em dobro e indenização por danos morais.",
+    "bloco_alegacoes_autor": "\\section*{Alegações da parte autora}\n\\begin{itemize}\n\\item Jamais contratou, solicitou ou autorizou empréstimo consignado com o Banco UFMG.\n\\item Não possui conta na Caixa Econômica Federal, onde foi depositado o crédito do empréstimo.\n\\item Nunca utilizou aplicativo ou canal digital do banco para contratação.\n\\item Houve uso indevido de seus dados pessoais para contratação fraudulenta.\n\\item Descontos indevidos comprometem sua subsistência, pois depende exclusivamente do benefício previdenciário.\n\\item Requereu registro de ocorrência policial e reclamação administrativa junto ao banco e Banco Central.\n\\end{itemize}",
+    "bloco_analise_documental": "\\section*{Documentos e evidências apresentadas pelo banco}\n\\begin{itemize}\n\\item Comprovante de crédito emitido pelo Banco UFMG confirmando operação de empréstimo consignado via aplicativo mobile.\n\\item Demonstrativo de evolução da dívida com parcelas pagas e saldo devedor atualizado.\n\\item Laudo referenciado interno do banco com evidências digitais da contratação (device fingerprint, IP, autenticação biométrica e senha eletrônica).\n\\end{itemize}",
+    "bloco_pontos_criticos": "\\section*{Pontos críticos do caso}\n\\subsection*{Pontos favoráveis ao banco}\n\\begin{itemize}\n\\item Apresenta comprovante de crédito e contrato formalizado com dados do autor.\n\\item Evidências digitais indicam contratação via aplicativo mobile com autenticação biométrica e senha.\n\\item Registro da operação e liberação do crédito em conta vinculada ao tomador.\n\\end{itemize}\n\n\\subsection*{Pontos desfavoráveis ao banco}\n\\begin{itemize}\n\\item Ausência do vídeo de liveness (biometria facial) tradicionalmente capturado no final do fluxo de contratação.\n\\item Conta para liberação do crédito não pertence ao autor, que nega possuir conta na Caixa Econômica Federal.\n\\item Autor alega não ter utilizado o aplicativo nem ter autorizado a contratação.\n\\item Descontos realizados em benefício previdenciário, o que agrava a situação pela vulnerabilidade do autor.\n\\end{itemize}\n\n\\subsection*{Observações importantes}\nO caso envolve alegação de fraude com uso indevido de dados pessoais do autor idoso e aposentado, com forte indício de contratação por terceiro. A ausência do vídeo de liveness no sistema do banco pode comprometer a prova da efetiva manifestação de vontade do autor. A tutela de urgência é requerida para cessar descontos que comprometem verba alimentar.",
+    "placeholder_subagent_risco": "% =========================\n% TODO: SAÍDA DO SUBAGENT DE RISCO\n% Inserir aqui:\n% - probabilidade de êxito / não êxito\n% - classificação preditiva\n% - confiança do modelo\n% =========================",
+    "placeholder_subagent_acordo": "% =========================\n% TODO: SAÍDA DO SUBAGENT DE ACORDO\n% Inserir aqui:\n% - recomendação de acordo ou defesa\n% - valor sugerido\n% - faixa de negociação\n% - justificativa econômica\n% ========================="
+  }
+}
