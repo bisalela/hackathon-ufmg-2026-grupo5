@@ -1,0 +1,57 @@
+- Ideias Sistema Enter
+
+Aplicativo para o advogado usar
+ - login do advogado
+ - login de administrador
+
+telas para o advogado:
+    - upload de arquivo (campo para declarar nome da pasta)
+        - campo para upar os arquivos
+        - importante confirmar que todos os arquivos necessários foram selecionados
+        - botão de gerar relatório
+        - campo perguntando nome do cliente com opções pré selecionadas
+    - tela com todas as pastas upadas 
+        - campo para selecionar o cliente para ter acesso as pastas
+        - clicar dentro das pastas upadas e ter uma tela com a analise juridica da documentação enviada
+        - botão de download em cada icone que baixa o relatório em pdf, baseado num latex contendo a analise da pagina de analise com uma abordagem mais textual, enquanto na pasta fica de forma mais visual
+        - icone para excluir as pastas
+        - ferramenta para filtrar por nome ou data de criação
+        - ferramenta para edição para incluir mais novos arquivos que gera uma nova analise com as caracteristicas (nome e data) da anterior (válido usar a analise anterior em algum lugar do fluxo para comparação)
+        - pastas editadas exibem a data de edição além da de criação
+        - documentos incluídos acompanham a data de inclusão, os que ja foram incluidos na criação ficam com a data da criação
+        - filtro aprovados, reprovados, esperando analise e todos
+        - icone na pasta mostrando a situação do caso (aprovado reprovado aguardando analise)
+    - tela de analise do processo
+        - opção para visualizar uma tabela com todos os documentos incluídos com nome do arquivo e data de inclusão
+        - campos pré estabelecidos que vão ser preenchidos de forma visual com o os valores que o AI Agent responder 
+        - botão de aprovar e baixar, botão de reprovar, botão de edição
+        - botão de edição, transformar os campos gerados em editavel para o advogado substituir o valor final no PDF da análise
+        - flag de analise editada caso for editada
+    - tela de usuário??
+        - nome
+        - email
+        - cargo
+            - advogado
+                - casos aprovados
+                - casos reprovados
+                - casos aguardando analise
+        - alterar senha
+    
+telas para o ADM
+    - tela com todas as pastas upadas 
+        - dado de qual advogado upou
+        - filtro por cliente e por advogado
+        - status do envio
+    - tela da analise do processo igual do advogado
+    - tela de resumo da produtividade dos advogados
+        - exibição de quantas analises foram criadas ao total
+        - exibição do numero de analises aguardando análise
+        - exibição da quantidade de analises aprovadas e reprovadas
+        - opçao de filtrar por advogado
+    - tela de todos os usuarios com um lapis de edição para trocar o email nome ou senha
+
+
+Regra atualizada:
+a tela de upload do arquivo passa para o ADM, ao upar ele tem que informar o advogado do caso, o advogado nao pode editar as pastas nem excluir, apenas aprovar ou reprovar a analise
+
+na exibição dos casos ter um indicador de sugestão do agente, sem ter que clicar pra ver se vai ser acordo ou não
