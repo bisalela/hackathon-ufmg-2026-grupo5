@@ -1,28 +1,24 @@
 import { useState } from "react";
-import { Navigate, Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Lock, ShieldCheck, User } from "lucide-react";
-import { defaultCredentials, getRole, isAuthenticated, login } from "../lib/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, Lock, Mail, ShieldCheck } from "lucide-react";
+import { defaultCredentials, getRole, login } from "../lib/auth";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    username: defaultCredentials.username,
+    email: defaultCredentials.email,
     password: defaultCredentials.password,
     role: getRole(),
   });
   const [error, setError] = useState("");
 
-  if (isAuthenticated()) {
-    return <Navigate to="/advogado/dashboard" replace />;
-  }
-
   function handleSubmit(event) {
     event.preventDefault();
 
-    const valid = login(form.username, form.password, form.role);
+    const valid = login(form.email, form.password, form.role);
 
     if (!valid) {
-      setError("Use user abc and password 123.");
+      setError("Use o e-mail demo@enteros.ai e a senha 123.");
       return;
     }
 
@@ -46,15 +42,14 @@ export default function LoginPage() {
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.05] px-3.5 py-1.5 text-xs font-medium text-slate-300">
               <ShieldCheck size={12} />
-              EnterOS Access
+              Enter OS Access
             </div>
             <h1 className="mt-8 font-display text-4xl leading-tight text-white">
-              Access the lawyer review workflow.
+              Acesse o fluxo juridico da plataforma.
             </h1>
             <p className="mt-4 max-w-md text-sm leading-7 text-slate-300">
-              Review uploaded folders, inspect AI recommendations, and decide
-              whether each case should follow an agreement path or a defense
-              path.
+              Entre com suas credenciais para revisar casos, validar a recomendacao
+              do agente e seguir para o workflow completo.
             </p>
           </div>
 
@@ -64,12 +59,12 @@ export default function LoginPage() {
             </p>
             <div className="mt-4 space-y-2.5 text-sm text-slate-300">
               <p>
-                User: <span className="font-semibold text-white">abc</span>
+                E-mail: <span className="font-semibold text-white">demo@enteros.ai</span>
               </p>
               <p>
-                Password: <span className="font-semibold text-white">123</span>
+                Senha: <span className="font-semibold text-white">123</span>
               </p>
-              <p className="text-xs text-slate-400">Use this login to access the protected advogado dashboard.</p>
+              <p className="text-xs text-slate-400">Use esse login para acessar a area protegida da ferramenta.</p>
             </div>
           </div>
         </div>
@@ -77,33 +72,32 @@ export default function LoginPage() {
         <div className="p-8 sm:p-10">
           <div className="mx-auto max-w-md">
             <p className="text-xs uppercase tracking-[0.32em] text-slate-400">
-              Advogado Login
+              Login
             </p>
             <h2 className="mt-3 text-3xl font-semibold text-white">
-              Access EnterOS
+              Acessar Enter OS
             </h2>
             <p className="mt-3 text-sm leading-6 text-slate-300">
-              Protected access for the lawyer workflow, with approval and review
-              of AI-generated legal analysis.
+              Entre com e-mail e senha para continuar para o workflow da plataforma.
             </p>
 
             <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
               <label className="block">
                 <span className="mb-2 block text-xs font-medium text-slate-300">
-                  User
+                  E-mail
                 </span>
                 <div className="flex items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.05] px-4 py-3 transition duration-200 focus-within:border-white/20 focus-within:bg-white/[0.07]">
-                  <User size={15} className="shrink-0 text-slate-400" />
+                  <Mail size={15} className="shrink-0 text-slate-400" />
                   <input
-                    type="text"
-                    value={form.username}
+                    type="email"
+                    value={form.email}
                     onChange={(event) =>
                       setForm((current) => ({
                         ...current,
-                        username: event.target.value,
+                        email: event.target.value,
                       }))
                     }
-                    placeholder="abc"
+                    placeholder="demo@enteros.ai"
                     className="w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500"
                   />
                 </div>
@@ -111,7 +105,7 @@ export default function LoginPage() {
 
               <label className="block">
                 <span className="mb-2 block text-xs font-medium text-slate-300">
-                  Password
+                  Senha
                 </span>
                 <div className="flex items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.05] px-4 py-3 transition duration-200 focus-within:border-white/20 focus-within:bg-white/[0.07]">
                   <Lock size={15} className="shrink-0 text-slate-400" />
@@ -140,7 +134,7 @@ export default function LoginPage() {
                 type="submit"
                 className="w-full rounded-xl bg-white px-5 py-3 text-sm font-semibold text-black transition duration-200 hover:bg-slate-100 active:bg-slate-200"
               >
-                Enter Dashboard
+                Entrar
               </button>
             </form>
 
@@ -173,7 +167,7 @@ export default function LoginPage() {
             </div>
 
             <p className="mt-4 text-xs text-slate-500">
-              Default login: <span className="text-slate-300">abc / 123</span>
+              Login demo: <span className="text-slate-300">demo@enteros.ai / 123</span>
             </p>
           </div>
         </div>

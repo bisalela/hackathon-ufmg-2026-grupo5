@@ -2,13 +2,13 @@ const AUTH_KEY = "enter-auth-session";
 const ROLE_KEY = "enter-auth-role";
 
 export const defaultCredentials = {
-  username: "abc",
+  email: "demo@enteros.ai",
   password: "123",
 };
 
-export function login(username, password, role = "advogado") {
+export function login(email, password, role = "advogado") {
   const valid =
-    username === defaultCredentials.username &&
+    email === defaultCredentials.email &&
     password === defaultCredentials.password;
 
   if (valid && typeof window !== "undefined") {

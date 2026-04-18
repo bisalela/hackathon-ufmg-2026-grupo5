@@ -44,61 +44,126 @@ body {
   overflow: hidden;
 }
 
-.landing-shell .landing-backdrop,
-.landing-shell .landing-grid {
-  position: absolute;
-  z-index: 0;
-}
-
-.landing-shell .landing-backdrop {
-  inset: -8%;
-  background:
-    radial-gradient(circle at 18% 20%, rgba(250, 204, 21, 0.16), transparent 24%),
-    radial-gradient(circle at 82% 18%, rgba(245, 158, 11, 0.12), transparent 22%),
-    radial-gradient(circle at 50% 78%, rgba(253, 224, 71, 0.1), transparent 30%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.02), transparent 45%);
-  filter: blur(10px);
-  opacity: 0.95;
-  animation: landingDrift 20s ease-in-out infinite alternate;
-}
-
-.landing-shell .landing-grid {
-  inset: 0;
-  opacity: 0.32;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.032) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: radial-gradient(circle at center, black 42%, transparent 90%);
-  animation: landingGridDrift 28s linear infinite;
-}
-
 .page-shell > * {
   position: relative;
   z-index: 1;
 }
 
-@keyframes landingDrift {
+.landing-minimal-glow {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.13), transparent 14%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.06), transparent 26%);
+  filter: blur(28px);
+  animation: landingPulse 7s ease-in-out infinite;
+}
+
+.landing-minimal-vignette {
+  background:
+    radial-gradient(circle at center, transparent 0%, transparent 42%, rgba(0, 0, 0, 0.46) 72%, rgba(0, 0, 0, 0.92) 100%);
+}
+
+.landing-minimal-stage {
+  animation: landingStageReveal 1.6s cubic-bezier(0.18, 0.84, 0.22, 1) both;
+}
+
+.landing-minimal-wordmark-wrap {
+  overflow: hidden;
+}
+
+.landing-minimal-wordmark {
+  text-shadow: 0 0 32px rgba(255, 255, 255, 0.08);
+  animation:
+    landingWordmarkRise 1.4s cubic-bezier(0.16, 0.9, 0.22, 1) both,
+    landingWordmarkGlow 5.5s ease-in-out 1.6s infinite;
+}
+
+.landing-minimal-divider {
+  width: min(180px, 42vw);
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.7) 50%, transparent 100%);
+  opacity: 0;
+  animation: landingDividerReveal 1.2s ease 0.65s forwards;
+}
+
+.landing-minimal-subtitle {
+  opacity: 0;
+  animation: landingFadeUp 1s ease 0.8s forwards;
+}
+
+.landing-minimal-cta-wrap {
+  opacity: 0;
+  animation: landingFadeUp 1s ease 1s forwards;
+}
+
+.landing-minimal-cta {
+  box-shadow: 0 18px 60px rgba(255, 255, 255, 0.12);
+}
+
+@keyframes landingPulse {
   0% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(1.5%, -1%, 0) scale(1.03);
+    opacity: 0.72;
+    transform: scale(0.96);
   }
   100% {
-    transform: translate3d(-1%, 1.25%, 0) scale(1.05);
+    opacity: 1;
+    transform: scale(1.04);
   }
 }
 
-@keyframes landingGridDrift {
+@keyframes landingStageReveal {
   0% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(-12px, 10px, 0);
+    opacity: 0;
+    transform: scale(0.985);
   }
   100% {
-    transform: translate3d(-24px, 20px, 0);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes landingWordmarkRise {
+  0% {
+    opacity: 0;
+    transform: translateY(34px) scale(0.96);
+    letter-spacing: 0.56em;
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    letter-spacing: 0.34em;
+    filter: blur(0);
+  }
+}
+
+@keyframes landingWordmarkGlow {
+  0%, 100% {
+    text-shadow: 0 0 28px rgba(255, 255, 255, 0.06);
+  }
+  50% {
+    text-shadow: 0 0 44px rgba(255, 255, 255, 0.14);
+  }
+}
+
+@keyframes landingDividerReveal {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.3);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes landingFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
