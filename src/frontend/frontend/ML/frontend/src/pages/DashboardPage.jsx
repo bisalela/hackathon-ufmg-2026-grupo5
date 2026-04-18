@@ -165,6 +165,47 @@ function buildEnrichedProcesses(processos, clientes, analises) {
         },
         justificativa_economica:
           recomendacao.justificativa_economica || "Sem justificativa econômica detalhada.",
+        metodo_calculo:
+          recomendacao.metodo_calculo || "Sem método de cálculo informado.",
+      },
+      decisao_politica: result.decisao_politica || null,
+      limiar_ativo: Number.isFinite(Number(result.limiar_ativo))
+        ? Number(result.limiar_ativo)
+        : null,
+      qualitative_score: Number.isFinite(Number(result.qualitative_score))
+        ? Number(result.qualitative_score)
+        : null,
+      probabilidades_base: {
+        p_improcedencia: Number.isFinite(Number(result?.probabilidades_base?.p_improcedencia))
+          ? Number(result.probabilidades_base.p_improcedencia)
+          : null,
+        p_parcial_procedencia: Number.isFinite(
+          Number(result?.probabilidades_base?.p_parcial_procedencia),
+        )
+          ? Number(result.probabilidades_base.p_parcial_procedencia)
+          : null,
+        p_procedencia: Number.isFinite(Number(result?.probabilidades_base?.p_procedencia))
+          ? Number(result.probabilidades_base.p_procedencia)
+          : null,
+        p_nao_exito: Number.isFinite(Number(result?.probabilidades_base?.p_nao_exito))
+          ? Number(result.probabilidades_base.p_nao_exito)
+          : null,
+      },
+      shap_transparencia: Array.isArray(result.shap_transparencia)
+        ? result.shap_transparencia
+            .map((item) => ({
+              feature: String(item?.feature || ""),
+              valor: Number(item?.valor),
+            }))
+            .filter((item) => item.feature && Number.isFinite(item.valor))
+        : [],
+      preflight: {
+        extinto: result?.preflight?.extinto === true,
+        documentos_obrigatorios_faltantes: toList(
+          result?.preflight?.documentos_obrigatorios_faltantes,
+        ),
+        justificativa:
+          result?.preflight?.justificativa || "Sem justificativa de pre-flight.",
       },
     };
   });
@@ -989,7 +1030,7 @@ export default function DashboardPage() {
                   </p>
                 </div>
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-4">
-                  <p className="text-xs text-slate-500">Confianca</p>
+                  <p className="text-xs text-slate-500">Probabilidade de exito do banco</p>
                   <p className="mt-1 text-sm font-semibold text-white">
                     {Math.round(currentCase?.probabilidade_exito || 0)}%
                   </p>
@@ -1138,9 +1179,89 @@ export default function DashboardPage() {
                       {formatCurrency(currentCase?.recomendacao_estrategica?.faixa_negociacao?.minimo || 0)} a{" "}
                       {formatCurrency(currentCase?.recomendacao_estrategica?.faixa_negociacao?.maximo || 0)}
                     </p>
+                    <p>Método de cálculo: {currentCase?.recomendacao_estrategica?.metodo_calculo || "-"}</p>
                     <p className="pt-1">{currentCase?.recomendacao_estrategica?.justificativa_economica || "Sem justificativa econômica detalhada."}</p>
                   </div>
                 </div>
+              </div>
+
+              <div className="mt-4 grid gap-3 md:grid-cols-2">
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-4">
+                  <p className="text-xs text-slate-500">Policy engine</p>
+                  <div className="mt-2 space-y-1.5 text-sm text-slate-300">
+                    <p>Decisao politica: {currentCase?.decisao_politica || "-"}</p>
+                    <p>
+                      Limiar ativo:{" "}
+                      {currentCase?.limiar_ativo != null
+                        ? currentCase.limiar_ativo.toFixed(4)
+                        : "-"}
+                    </p>
+                    <p>
+                      Qualitative score (S_LLM):{" "}
+                      {currentCase?.qualitative_score != null
+                        ? currentCase.qualitative_score.toFixed(4)
+                        : "-"}
+                    </p>
+                    <p>
+                      P(improcedencia):{" "}
+                      {currentCase?.probabilidades_base?.p_improcedencia != null
+                        ? `${(currentCase.probabilidades_base.p_improcedencia * 100).toFixed(2)}%`
+                        : "-"}
+                    </p>
+                    <p>
+                      P(parcial procedencia):{" "}
+                      {currentCase?.probabilidades_base?.p_parcial_procedencia != null
+                        ? `${(currentCase.probabilidades_base.p_parcial_procedencia * 100).toFixed(2)}%`
+                        : "-"}
+                    </p>
+                    <p>
+                      P(procedencia):{" "}
+                      {currentCase?.probabilidades_base?.p_procedencia != null
+                        ? `${(currentCase.probabilidades_base.p_procedencia * 100).toFixed(2)}%`
+                        : "-"}
+                    </p>
+                    <p>
+                      P(nao exito):{" "}
+                      {currentCase?.probabilidades_base?.p_nao_exito != null
+                        ? `${(currentCase.probabilidades_base.p_nao_exito * 100).toFixed(2)}%`
+                        : "-"}
+                    </p>
+                  </div>
+                </div>
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-4">
+                  <p className="text-xs text-slate-500">Pre-flight</p>
+                  <div className="mt-2 space-y-1.5 text-sm text-slate-300">
+                    <p>Status: {currentCase?.preflight?.extinto ? "EXTINTO" : "Aprovado"}</p>
+                    <p className="leading-6">
+                      {currentCase?.preflight?.justificativa || "Sem justificativa."}
+                    </p>
+                    {currentCase?.preflight?.documentos_obrigatorios_faltantes?.length ? (
+                      <ul className="mt-2 space-y-1 text-xs text-amber-300">
+                        {currentCase.preflight.documentos_obrigatorios_faltantes.map((doc) => (
+                          <li key={doc}>Faltante: {doc}</li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 rounded-xl border border-white/[0.06] bg-white/[0.03] p-4">
+                <p className="text-xs text-slate-500">Transparencia do modelo (SHAP)</p>
+                {currentCase?.shap_transparencia?.length ? (
+                  <ul className="mt-2 space-y-2 text-sm text-slate-300">
+                    {currentCase.shap_transparencia.slice(0, 8).map((item) => (
+                      <li
+                        key={`${item.feature}-${item.valor}`}
+                        className="rounded-lg border border-white/[0.05] bg-white/[0.02] px-3 py-2"
+                      >
+                        {item.feature}: {Number(item.valor).toFixed(4)}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-2 text-sm text-slate-400">Sem dados SHAP para este caso.</p>
+                )}
               </div>
 
               <div className="mt-4 rounded-xl border border-white/[0.06] bg-white/[0.03] p-4">

@@ -28,6 +28,14 @@ export type DiagnosticoDocumentos = {
   documentos: DocumentoDiagnostico[]
 }
 
+export type DocumentoProcessado = {
+  id: string
+  nome_arquivo: string
+  caminho_storage: string
+  tipo: DocumentoDiagnostico["tipo"]
+  status: DocumentoDiagnostico["status"]
+}
+
 async function salvarDiagnostico(processoId: string, diagnostico: DiagnosticoDocumentos) {
   const debugPath = path.join(reportsDir, processoId, "documentos-debug.json")
   await mkdir(path.dirname(debugPath), { recursive: true })
@@ -168,7 +176,34 @@ export async function carregarDocumentosDoProcesso(processoId: string) {
 }
 
 export async function carregarDocumentosDoProcessoComDiagnostico(processoId: string) {
+  const { data: documentos, error } = await supabaseAdmin
+    .from("documentos")
+    .select("id, nome_arquivo, caminho_storage")
+    .eq("processo_id", processoId)
+
+  if (error) throw error
+
   const texto = await carregarDocumentosDoProcesso(processoId)
   const debugPath = path.join(reportsDir, processoId, "documentos-debug.json")
-  return { texto, debugPath }
+  const documentosProcessados: DocumentoProcessado[] = (documentos ?? []).map((doc) => {
+    const nomeArquivo = String(doc.nome_arquivo ?? "sem_nome")
+    const fileName = nomeArquivo.toLowerCase()
+    const tipo = fileName.endsWith(".pdf")
+      ? "pdf"
+      : fileName.endsWith(".csv")
+      ? "csv"
+      : fileName.endsWith(".txt")
+      ? "txt"
+      : "nao_suportado"
+
+    return {
+      id: String(doc.id ?? ""),
+      nome_arquivo: nomeArquivo,
+      caminho_storage: String(doc.caminho_storage ?? ""),
+      tipo,
+      status: "ok",
+    }
+  })
+
+  return { texto, debugPath, documentos: documentosProcessados }
 }

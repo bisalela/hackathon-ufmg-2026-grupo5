@@ -53,6 +53,32 @@ function formatCurrency(value: number | null | undefined) {
 function buildLatexReport(processoId: string, result: AgentAnalysis) {
   const identificacao = result.identificacao
   const templateVersion = "v2-completo"
+  const shapItems = result.shap_transparencia
+    .slice(0, 8)
+    .map((item) => `\\item ${escapeLatex(item.feature)}: ${escapeLatex(item.valor.toFixed(4))}`)
+    .join("\\n")
+  const limiarText =
+    result.limiar_ativo == null ? "N/A" : escapeLatex(result.limiar_ativo.toFixed(4))
+  const pImprocedencia =
+    result.probabilidades_base.p_improcedencia == null
+      ? "N/A"
+      : escapeLatex((result.probabilidades_base.p_improcedencia * 100).toFixed(2))
+  const pParcial =
+    result.probabilidades_base.p_parcial_procedencia == null
+      ? "N/A"
+      : escapeLatex((result.probabilidades_base.p_parcial_procedencia * 100).toFixed(2))
+  const pProcedencia =
+    result.probabilidades_base.p_procedencia == null
+      ? "N/A"
+      : escapeLatex((result.probabilidades_base.p_procedencia * 100).toFixed(2))
+  const pNaoExito =
+    result.probabilidades_base.p_nao_exito == null
+      ? "N/A"
+      : escapeLatex((result.probabilidades_base.p_nao_exito * 100).toFixed(2))
+  const qualitativeScore =
+    result.qualitative_score == null
+      ? "N/A"
+      : escapeLatex(result.qualitative_score.toFixed(4))
 
   return `
 % template_version: ${templateVersion}
@@ -109,13 +135,25 @@ Uso indevido de dados: ${escapeLatex(result.fatores_juridicos_relevantes.alegaca
 Probabilidade de êxito do banco: ${escapeLatex(result.analise_preditiva.probabilidade_exito_banco)}\\% \\\\
 Probabilidade de não êxito do banco: ${escapeLatex(result.analise_preditiva.probabilidade_nao_exito_banco)}\\% \\\\
 Classificação preditiva: ${escapeLatex(result.analise_preditiva.classificacao_preditiva)} \\\\
-Confiança do modelo: ${escapeLatex(result.analise_preditiva.confianca_modelo)}\\%
+Confiança do modelo: ${escapeLatex(result.analise_preditiva.confianca_modelo)}\\% \\\\
+P(Improcedência): ${pImprocedencia}\\% \\\\
+P(Parcial procedência): ${pParcial}\\% \\\\
+P(Procedência): ${pProcedencia}\\% \\\\
+P(Não êxito): ${pNaoExito}\\% \\\\
+Qualitative score (S\\_LLM): ${qualitativeScore} \\\\
+Limiar dinâmico ativo: ${limiarText} \\\\
+Decisão da política: ${escapeLatex(result.decisao_politica)}
 
 \\section*{Recomendação estratégica}
 Recomendação: ${escapeLatex(result.recomendacao_estrategica.recomendacao)} \\\\
 Valor sugerido: ${formatCurrency(result.recomendacao_estrategica.valor_sugerido)} \\\\
 Faixa de negociação: ${formatCurrency(result.recomendacao_estrategica.faixa_negociacao.minimo)} a ${formatCurrency(result.recomendacao_estrategica.faixa_negociacao.maximo)} \\\\
 Justificativa econômica: ${escapeLatex(result.recomendacao_estrategica.justificativa_economica)}
+
+\\section*{Transparência do modelo (SHAP)}
+\\begin{itemize}
+${shapItems || "\\\\item SHAP indisponível para este caso."}
+\\end{itemize}
 \\end{document}
 `.trimStart()
 }
