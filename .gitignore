@@ -25,6 +25,7 @@ build/
 *.log
 *.tmp
 *.cache
+src/AI_Agent_Enter/reports/
 .DS_Store
 Thumbs.db
 
