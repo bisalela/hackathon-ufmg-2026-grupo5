@@ -695,7 +695,7 @@ export default function DashboardPage() {
           adm_id: adminProfile.id,
           advogado_id: adminForm.advogadoId,
           nome_pasta: `"${adminForm.nomePasta}"`,
-          status: "nascimento",
+          status: "novo_processo",
         })
         .select("*")
         .limit(1);
