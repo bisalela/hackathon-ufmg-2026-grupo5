@@ -110,7 +110,7 @@ Documentos:
 """
 
     resposta = client.chat.completions.create(
-        model="gpt-4.1-mini",
+        model="gpt-5",
         messages=[
             {"role": "system", "content": "Você organiza documentos jurídicos em JSON estruturado."},
             {"role": "user", "content": prompt}

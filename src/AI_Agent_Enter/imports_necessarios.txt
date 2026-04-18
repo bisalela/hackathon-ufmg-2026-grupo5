@@ -1,0 +1,36 @@
+# Imports necessarios - AI_Agent_Enter
+# Gerado a partir dos arquivos .ts/.py do backend e scripts locais.
+
+[Node/TypeScript - pacotes externos]
+express
+cors
+dotenv
+openai
+@supabase/supabase-js
+pdf-parse (via createRequire)
+
+[Node/TypeScript - modulos nativos]
+module
+node:fs/promises
+node:path
+node:url
+node:child_process
+
+[Node/TypeScript - imports locais]
+./agent
+./loadDocuments
+./routes.js
+./supabaseAdmin
+
+[Python - bibliotecas externas]
+openai
+python-dotenv
+pypdf
+pandas
+joblib
+
+[Python - bibliotecas padrao]
+os
+glob
+json
+sys
